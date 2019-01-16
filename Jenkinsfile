@@ -32,7 +32,7 @@ pipeline {
     }
     stage('Microscanner security scan'){
       steps {
-        aquaMicroscanner imageName: 'peopleapi/peopleapi', notCompliesCmd: 'exit 1', onDisallowed: 'fail'
+        aquaMicroscanner imageName: 'peopleapi/peopleapi:latest', notCompliesCmd: 'exit 1', onDisallowed: 'fail'
       }
     }
     stage('Promote to Staging') {
