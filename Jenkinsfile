@@ -31,7 +31,9 @@ pipeline {
       }
     }
     stage('Microscanner security scan'){
-      aquaMicroscanner imageName: 'peopleapi/peopleapi', notCompliesCmd: 'exit 1', onDisallowed: 'fail'
+      steps {
+        aquaMicroscanner imageName: 'peopleapi/peopleapi', notCompliesCmd: 'exit 1', onDisallowed: 'fail'
+      }
     }
     stage('Promote to Staging') {
       agent { label 'base' }
