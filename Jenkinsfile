@@ -25,10 +25,13 @@ pipeline {
       steps {
         withSonarQubeEnv('SonarQube-Server') {
           sh "dotnet sonarscanner begin /k:peopleapi /d:sonar.host.url=$SONAR_HOST_URL /d:sonar.login=$SONAR_AUTH_TOKEN"
-          sh "dotnet build contacts"
+          sh "dotnet build"
           sh "dotnet sonarscanner end /d:sonar.login=$SONAR_AUTH_TOKEN"
         }
       }
+    }
+    stage('Microscanner security scan'){
+      aquaMicroscanner imageName: 'peopleapi/peopleapi', notCompliesCmd: 'exit 1', onDisallowed: 'fail'
     }
     stage('Promote to Staging') {
       agent { label 'base' }
