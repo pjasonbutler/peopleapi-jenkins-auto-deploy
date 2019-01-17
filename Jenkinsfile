@@ -31,6 +31,7 @@ pipeline {
       }
     }
     stage('Microscanner security scan'){
+      agent { label 'base' }
       steps {
         aquaMicroscanner imageName: 'peopleapi/peopleapi:latest', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
       }
