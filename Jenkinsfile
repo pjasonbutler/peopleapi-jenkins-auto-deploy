@@ -1,9 +1,8 @@
 pipeline {
-  agent {
-    label 'dotnetcore'
-  }
+  agent none
   stages {
     stage('Build') {
+      agent { label 'dotnetcore' }
       steps {
         sh "dotnet build"
       }
@@ -30,26 +29,10 @@ pipeline {
         }
       }
     }
-    /*
-    You need a docker-in-docker to run this on a Jenkins slave agent and do not like doing that
+    /*  You may need a docker-in-docker to run this on a Jenkins slave agent and do not like doing that */
     stage('Microscanner security scan'){
-      agent { label 'docker' }
       steps {
         aquaMicroscanner imageName: 'peopleapi/peopleapi:latest', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
-      }
-    }
-    */
-    stage('Promote to Staging') {
-      agent { label 'base' }
-      steps {
-        timeout(time:60, unit:'MINUTES') {
-          input message: "Would you like to promote the latest development image to the staging project?", ok: "Promote"
-        }
-        script {
-          openshift.withCluster() {
-            openshift.tag("peopleapi/peopleapi:latest", "peopleapi/peopleapi:stage")
-          }
-        }
       }
     }
   }
