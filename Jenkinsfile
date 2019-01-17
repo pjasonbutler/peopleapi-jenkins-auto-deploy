@@ -30,12 +30,15 @@ pipeline {
         }
       }
     }
+    /*
+    You need a docker-in-docker to run this on a Jenkins slave agent and do not like doing that
     stage('Microscanner security scan'){
-      agent { label 'base' }
+      agent { label 'docker' }
       steps {
         aquaMicroscanner imageName: 'peopleapi/peopleapi:latest', notCompliesCmd: 'exit 1', onDisallowed: 'fail', outputFormat: 'html'
       }
     }
+    */
     stage('Promote to Staging') {
       agent { label 'base' }
       steps {
