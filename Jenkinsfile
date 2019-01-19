@@ -2,7 +2,7 @@ pipeline {
   agent none
   stages {
     stage('Build') {
-      agent { label 'dotnetcore' }
+      agent { label 'dotnetcore21' }
       steps {
         sh "dotnet build"
       }

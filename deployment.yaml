@@ -255,6 +255,123 @@ objects:
       resources:
         requests:
           storage: ${MSSQL_VOLUME_CAPACITY}
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: jenkins-agent-base
+      labels:
+        role: jenkins-slave
+    data:
+      base: |-
+        <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+          <inheritFrom></inheritFrom>
+          <name>base</name>
+          <instanceCap>2147483647</instanceCap>
+          <idleMinutes>0</idleMinutes>
+          <label>base</label>
+          <serviceAccount>jenkins</serviceAccount>
+          <nodeSelector></nodeSelector>
+          <volumes/>
+          <containers>
+            <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+              <name>jnlp</name>
+              <image>docker.io/openshift/jenkins-slave-base-centos7</image>
+              <privileged>false</privileged>
+              <alwaysPullImage>false</alwaysPullImage>
+              <workingDir>/tmp</workingDir>
+              <command></command>
+              <args>${computer.jnlpmac} ${computer.name}</args>
+              <ttyEnabled>false</ttyEnabled>
+              <resourceRequestCpu></resourceRequestCpu>
+              <resourceRequestMemory></resourceRequestMemory>
+              <resourceLimitCpu></resourceLimitCpu>
+              <resourceLimitMemory></resourceLimitMemory>
+              <envVars/>
+            </org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+          </containers>
+          <envVars/>
+          <annotations/>
+          <imagePullSecrets/>
+          <nodeProperties/>
+        </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: jenkins-agent-dotnetcore21
+      labels:
+        role: jenkins-slave
+    data:
+      dotnetcore21: |-
+        <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+          <inheritFrom></inheritFrom>
+          <name>dotnetcore21</name>
+          <instanceCap>2147483647</instanceCap>
+          <idleMinutes>0</idleMinutes>
+          <label>dotnetcore21</label>
+          <serviceAccount>jenkins</serviceAccount>
+          <nodeSelector></nodeSelector>
+          <volumes/>
+          <containers>
+            <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+              <name>jnlp</name>
+              <image>registry.access.redhat.com/dotnet/dotnet-21-jenkins-slave-rhel7</image>
+              <privileged>false</privileged>
+              <alwaysPullImage>false</alwaysPullImage>
+              <workingDir>/tmp</workingDir>
+              <command></command>
+              <args>${computer.jnlpmac} ${computer.name}</args>
+              <ttyEnabled>false</ttyEnabled>
+              <resourceRequestCpu></resourceRequestCpu>
+              <resourceRequestMemory></resourceRequestMemory>
+              <resourceLimitCpu></resourceLimitCpu>
+              <resourceLimitMemory></resourceLimitMemory>
+              <envVars/>
+            </org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+          </containers>
+          <envVars/>
+          <annotations/>
+          <imagePullSecrets/>
+          <nodeProperties/>
+        </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+  - apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: jenkins-agent-sonar-dotnet
+      labels:
+        role: jenkins-slave
+    data:
+      dotnetcore21: |-
+        <org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
+          <inheritFrom></inheritFrom>
+          <name>sonar-dotnet</name>
+          <instanceCap>2147483647</instanceCap>
+          <idleMinutes>0</idleMinutes>
+          <label>sonar-dotnet</label>
+          <serviceAccount>jenkins</serviceAccount>
+          <nodeSelector></nodeSelector>
+          <volumes/>
+          <containers>
+            <org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+              <name>jnlp</name>
+              <image>172.30.1.1:5000/openshift/jenkins-slave-sonarqube-dotnet</image>
+              <privileged>false</privileged>
+              <alwaysPullImage>false</alwaysPullImage>
+              <workingDir>/tmp</workingDir>
+              <command></command>
+              <args>${computer.jnlpmac} ${computer.name}</args>
+              <ttyEnabled>false</ttyEnabled>
+              <resourceRequestCpu></resourceRequestCpu>
+              <resourceRequestMemory></resourceRequestMemory>
+              <resourceLimitCpu></resourceLimitCpu>
+              <resourceLimitMemory></resourceLimitMemory>
+              <envVars/>
+            </org.csanchez.jenkins.plugins.kubernetes.ContainerTemplate>
+          </containers>
+          <envVars/>
+          <annotations/>
+          <imagePullSecrets/>
+          <nodeProperties/>
+        </org.csanchez.jenkins.plugins.kubernetes.PodTemplate>
 parameters:
   - name: "CONSUMER_GIT_URL"
     displayName: "Source Repository URL"
