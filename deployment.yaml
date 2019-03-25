@@ -28,6 +28,7 @@ objects:
         app: peopleapi
       namespace: peopleapi
     spec:
+      completionDeadlineSeconds: 3600
       env:
         - name: "GIT_SSL_NO_VERIFY"
           value: "true"
@@ -54,6 +55,7 @@ objects:
         app: peopleapidb
       namespace: peopleapi
     spec:
+      completionDeadlineSeconds: 3600
       env:
         - name: "GIT_SSL_NO_VERIFY"
           value: "true"
@@ -75,6 +77,7 @@ objects:
     metadata:
       name: "peopleapi-bc-pipeline"
     spec:
+      completionDeadlineSeconds: 3600
       source:
         git:
           ref: ${CONSUMER_GIT_BRANCH}
@@ -166,7 +169,13 @@ objects:
               ports:
                 - containerPort: 8080
                   protocol: TCP
-              resources: {}
+              resources: 
+                limits:
+                  cpu: 750m
+                  memory: 1Gi
+                requests:
+                  cpu: 250m
+                  memory: 350Mi
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
           dnsPolicy: ClusterFirst
@@ -219,7 +228,13 @@ objects:
               ports:
                 - containerPort: 1433
                   protocol: TCP
-              resources: {}
+              resources: 
+                limits:
+                  cpu: 500m
+                  memory: 750Mi
+                requests:
+                  cpu: 250m
+                  memory: 250Mi
               terminationMessagePath: /dev/termination-log
               terminationMessagePolicy: File
               volumeMounts:
